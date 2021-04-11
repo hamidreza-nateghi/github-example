@@ -6,12 +6,12 @@ import styles from "../../styles/Profile.module.css";
 
 const repos = [
   {
-    id: 1,
+    key: 1,
     name: "facebook/react",
     description: `A declarative, efficient, and flexible JavaScript library for building user interfaces.`,
   },
-  { id: 2, name: "facebook/create-react-app", description: `Set up a modern web app by running one command.` },
-  { id: 3, name: "paularmstrong/normalizr", description: `Normalizes nested JSON according to a schema` },
+  { key: 2, name: "facebook/create-react-app", description: `Set up a modern web app by running one command.` },
+  { key: 3, name: "paularmstrong/normalizr", description: `Normalizes nested JSON according to a schema` },
 ];
 
 const user = {
