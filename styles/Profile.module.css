@@ -1,0 +1,44 @@
+.avatar {
+  height: auto;
+  border-radius: 50%;
+}
+
+.name {
+  font-size: 26px;
+}
+
+.username {
+  font-size: 20px;
+  font-weight: 300;
+}
+
+.bio {
+  font-size: 16px;
+}
+
+.box {
+  background-color: white;
+  border: 1px solid #e1e4e8;
+  border-radius: 6px;
+}
+
+.detail li {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.btn {
+  text-align: center;
+}
+
+.btn button:first-child {
+  border-top-left-radius: 6px;
+  border-bottom-left-radius: 6px;
+  border-right-width: 0;
+}
+
+.btn button:last-child {
+  border-top-right-radius: 6px;
+  border-bottom-right-radius: 6px;
+}
