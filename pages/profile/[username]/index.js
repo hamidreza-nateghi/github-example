@@ -1,3 +1,4 @@
+import { useRouter } from "next/router";
 import { TeamOutlined, EnvironmentOutlined, GlobalOutlined } from "@ant-design/icons";
 
 import RepoList from "../../../components/RepoList";
@@ -5,6 +6,8 @@ import RepoList from "../../../components/RepoList";
 import styles from "../../../styles/Profile.module.css";
 
 export default function Profile({ user, repos }) {
+  const router = useRouter();
+  const page = router.query.page || 1;
   const { avatar_url, name, login, bio, followers, following, location, blog } = Object(user);
 
   return user ? (
@@ -52,8 +55,10 @@ export default function Profile({ user, repos }) {
           <div className="col-9 px-2">
             <RepoList repos={repos} />
             <div className={styles.btn}>
-              <button>Previous</button>
-              <button>Next</button>
+              <button onClick={() => router.push(`/profile/${login}/?page=${+page - 1}`)} disabled={page < 2}>
+                Previous
+              </button>
+              <button onClick={() => router.push(`/profile/${login}/?page=${+page + 1}`)}>Next</button>
             </div>
           </div>
         )}
@@ -64,17 +69,25 @@ export default function Profile({ user, repos }) {
   );
 }
 
+const getRepos = async (username, page = 1) => {
+  try {
+    const response = await fetch(`https://api.github.com/users/${username}/repos?per_page=6&page=${page}`);
+    const repos = await response.json();
+
+    return repos;
+  } catch (error) {}
+};
+
 export const getServerSideProps = async (context) => {
-  const { username } = context.params;
+  const { username, page } = context.query;
 
   try {
-    let response = await fetch(`https://api.github.com/users/${username}`);
+    const response = await fetch(`https://api.github.com/users/${username}`);
 
     if (response.ok) {
-      let user = await response.json();
+      const user = await response.json();
       try {
-        response = await fetch(`https://api.github.com/users/${username}/repos`);
-        let repos = await response.json();
+        const repos = await getRepos(username, page);
 
         return { props: { user, repos } };
       } catch (error) {
