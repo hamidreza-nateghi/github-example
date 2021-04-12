@@ -1,11 +1,6 @@
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { Input } from "antd";
-import { UserOutlined } from "@ant-design/icons";
-
-import styles from "../styles/Home.module.css";
-
-const { Search } = Input;
+import { Form, Input } from "antd";
 
 const checkUsername = async (username) => {
   try {
@@ -15,9 +10,7 @@ const checkUsername = async (username) => {
       const user = await response.json();
       return user;
     }
-  } catch (error) {
-    console.log(error);
-  }
+  } catch (error) {}
 
   return false;
 };
@@ -25,27 +18,35 @@ const checkUsername = async (username) => {
 export default function Home() {
   const router = useRouter();
 
-  const handleSearch = async (value) => {
+  const handleSubmit = async (values) => {
+    const { username } = values;
+
     try {
-      const user = await checkUsername(value);
+      const user = await checkUsername(username);
 
       if (user) {
-        router.push(`/profile/${value}`);
+        router.push(`/profile/${username}`);
       }
 
-      // TODO: username false
-    } catch (error) {
-      console.log(error);
-    }
+      // TODO: no such user
+    } catch (error) {}
   };
 
   return (
-    <div className={styles.container}>
+    <div className="container">
       <Head>
         <title>Github Example</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Search prefix={<UserOutlined />} placeholder="Enter username" onSearch={handleSearch} enterButton allowClear />
+      <Form className="p-3" autoComplete="off" onFinish={handleSubmit}>
+        <label>Find people on GitHub:</label>
+        <Form.Item name="username">
+          <div className="d-flex">
+            <Input className="flex-auto mr-2" required />
+            <button type="submit">Search</button>
+          </div>
+        </Form.Item>
+      </Form>
     </div>
   );
 }
