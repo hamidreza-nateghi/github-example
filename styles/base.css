@@ -30,11 +30,18 @@ h1 {
   font-weight: 600;
 }
 
+form {
+  font-size: 16px;
+}
+
 button {
   color: #0366d6;
   background-color: #fafbfc;
   padding: 5px 16px;
   border: 1px solid;
+  border-radius: 6px;
+  font: inherit;
+  font-weight: 500;
   border-color: #1b1f2326;
   line-height: 20px;
   cursor: pointer;
@@ -46,5 +53,13 @@ button:hover {
 }
 
 button:focus {
+  outline: none;
+}
+
+input {
+  padding: 5px 12px;
+  line-height: 20px;
+  border: 1px solid #e1e4e8;
+  border-radius: 6px;
   outline: none;
 }
